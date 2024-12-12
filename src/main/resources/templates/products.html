@@ -20,11 +20,22 @@
             <tr th:each="product : ${products}">
                 <td th:text="${product.name}"></td>
                 <td th:text="${product.price}"></td>
+                <td><a th:href="@{/products/edit/{id}(id=${product.id})}">Edit</a></td>
+                <td><a th:href="@{/products/delete/{id}(id=${product.id})}">Delete</a></td>
             </tr>
         </table>
     </div>
 
 </div>
+<h3>Add new product</h3>
+
+<form action="#" th:action="@{/products/add}" th:object="${product}" method="post">
+    <p>Name: <input type="text" th:field="*{name}"/></p>
+    <p>Price: <input type="text" th:field="*{price}"/></p>
+    <p><button type="submit">Add</button></p>
+</form>
+
+
 
 </body>
 </html>

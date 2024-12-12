@@ -9,7 +9,7 @@ public interface ClientService {
     Client addClient(String name, String address);
     void removeClient(String id);
     Client getClient(String id);
-    Client updateClient(String id, UpdateClient client);
+    Client updateClient(String id,Client client);
     List<Client> getAllClients();
 
 }

@@ -55,7 +55,7 @@ public class ClientServiceBean implements ClientService{
     }
 
     @Override
-    public Client updateClient(String id, UpdateClient updateClient) {
+    public Client updateClient(String id,Client updateClient) {
         if (!clients.containsKey(id)) {
             throw new NotFoundException("Client with id " + id + " does not exist");
         }

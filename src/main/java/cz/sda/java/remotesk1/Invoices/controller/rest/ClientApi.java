@@ -50,7 +50,10 @@ public class ClientApi {
 
     @PatchMapping("/{id}")
     ResponseEntity<Client> updateClient(@PathVariable("id") String id, @RequestBody UpdateClient client) {
-        var updated = clientService.updateClient(id, client);
+        var updated = clientService.updateClient(id, Client.builder()
+                .id(id).name(client.name())
+                .address(client.address())
+                .build());
         return ResponseEntity.ok(updated);
     }
 

@@ -1,0 +1,14 @@
+<html>
+<body>
+<h2>Clients</h2>
+<h3>Add new client</h3>
+
+<form action="#" th:action="@{/clients/update/{id}(id=${client.id})}" th:object="${client}" method="post">
+    <p>Name: <input type="text" th:field="*{name}" />
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    </p>
+    <p>Address: <input type="text" th:field="*{address}" /></p>
+    <p>,<button type="submit">Add</button> </p>
+</form>
+</body>
+</html>
