@@ -1,7 +1,9 @@
 package cz.sda.java.remotesk1.Invoices.controller.web;
+
 import cz.sda.java.remotesk1.Invoices.controller.rest.request.UpdateProduct;
 import cz.sda.java.remotesk1.Invoices.model.Product;
 import cz.sda.java.remotesk1.Invoices.service.ProductService;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

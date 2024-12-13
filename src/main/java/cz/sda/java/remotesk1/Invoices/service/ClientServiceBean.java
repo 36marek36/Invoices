@@ -1,6 +1,5 @@
 package cz.sda.java.remotesk1.Invoices.service;
 
-import cz.sda.java.remotesk1.Invoices.controller.rest.request.UpdateClient;
 import cz.sda.java.remotesk1.Invoices.exception.NotFoundException;
 import cz.sda.java.remotesk1.Invoices.model.Client;
 import lombok.extern.slf4j.Slf4j;
