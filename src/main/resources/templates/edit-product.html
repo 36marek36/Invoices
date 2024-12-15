@@ -7,10 +7,24 @@
 <body>
 <h2>Products</h2>
 <h3>Edit product</h3>
-<form action="#" th:action="@{/products/update/{id}(id=${product.id})}" th:object="${product}" method="post">
-    <p>Name: <input type="text" th:field="*{name}" /></p>
-    <p>Price: <input type="text" th:field="*{price}" /></p>
-    <p>,<button type="submit">Change</button> </p>
+
+<form action="#" th:action="@{/products/update/{id}(id=${updateProduct.id})}" th:object="${updateProduct}"
+      method="post">
+    <!--    <p>Name: <input type="text" th:field="*{name}" /></p>-->
+
+    <p><label>Name:</label> <input type="text" th:field="*{name}" th:errorclass="error"/>
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="error"></span>
+    </p>
+
+    <!--    <p>Price: <input type="text" th:field="*{price}" /></p>-->
+
+    <p><label>Price:</label> <input type="text" th:field="*{price}" th:errorclass="error"/>
+        <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" th:errorclass="error"></span>
+    </p>
+    <p>,
+        <button type="submit">Change</button>
+    </p>
 </form>
+
 </body>
 </html>

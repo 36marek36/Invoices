@@ -1,6 +1,7 @@
 package cz.sda.java.remotesk1.Invoices.controller.web.request;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,21 +11,14 @@ import lombok.NonNull;
 @Builder
 @EqualsAndHashCode
 
-public class UpdateClient {
-
+public class UpdateProduct {
     @NonNull
     private String id;
 
-//    @Pattern(regexp =)
-    @Size(min = 3, max = 50, message = "Name must contain min 3 letters")
     @NotBlank(message = "Name is required")
+//    @Size(min = 3,max = 50,message = "Name must contain min 3 letters")
     private String name;
 
-    @NotBlank(message = "Address is required")
-    private String address;
-
-//    @Min(8)
-//    @Max(999999)
-//    private int price;
-
+    @NotBlank(message = "Price is required")
+    private String price;
 }

@@ -29,7 +29,7 @@ public class ProductApi {
     @PostMapping("/")
     ResponseEntity<Product> addProduct(@RequestBody CreateProduct product){
         Product created = productService.addProduct(product.name(), product.price());
-        return ResponseEntity.created(URI.create("/products/"+created.id())).body(created);
+        return ResponseEntity.created(URI.create("/products/"+created.getId())).body(created);
     }
     @GetMapping("/")
     List<Product> getAllProducts() {
@@ -49,7 +49,7 @@ public class ProductApi {
 
     @PatchMapping("/{id}")
     ResponseEntity<Product> updateProduct(@PathVariable("id") String id, @RequestBody UpdateProduct product) {
-        var updated = productService.updateProduct(id, product);
+        var updated = productService.updateProduct(id, new Product(id, product.name(), product.price()));
         return ResponseEntity.ok(updated);
     }
 

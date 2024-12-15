@@ -1,5 +1,6 @@
 package cz.sda.java.remotesk1.Invoices.controller.web;
 
+import cz.sda.java.remotesk1.Invoices.controller.web.request.CreateClient;
 import cz.sda.java.remotesk1.Invoices.controller.web.request.UpdateClient;
 import cz.sda.java.remotesk1.Invoices.model.Client;
 import cz.sda.java.remotesk1.Invoices.service.ClientService;
@@ -26,13 +27,25 @@ public class ClientController {
     @GetMapping("/")
     String getAllClients(Model model) {
         model.addAttribute("clients", clientService.getAllClients());
-        model.addAttribute("client",Client.builder().build());
+        model.addAttribute("createClient",new Client());
         return "clients";
     }
 
+//    @PostMapping("/add")
+//    String addUser(Client client, Model model) {
+//        clientService.addClient(client.name(),client.address());
+//        return "redirect:/clients/";
+//    }
+
     @PostMapping("/add")
-    String addUser(Client client, Model model) {
-        clientService.addClient(client.name(),client.address());
+    String addUser(@Valid CreateClient client, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("createClient", client);
+            model.addAttribute("clients", clientService.getAllClients());
+            return "clients";
+        }
+
+        clientService.addClient(client.getName(),client.getAddress());
         return "redirect:/clients/";
     }
 
@@ -55,11 +68,7 @@ public class ClientController {
             model.addAttribute("updateClient", client);
             return "edit-client";
         }
-        clientService.updateClient(client.getId(),Client.builder()
-                .name(client.getName())
-                .address(client.getAddress())
-                .build());
-
+        clientService.updateClient(client.getId(),new Client(client.getId(),client.getName(),client.getAddress()));
         return "redirect:/clients/";
     }
 

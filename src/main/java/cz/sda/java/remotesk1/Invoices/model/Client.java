@@ -1,7 +1,21 @@
 package cz.sda.java.remotesk1.Invoices.model;
 
-import lombok.Builder;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.*;
 
-@Builder
-public record Client (String id, String name, String address) {
+@Entity
+@Data
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+
+public class Client {
+
+    @Id
+    private String id;
+    private String name;
+    private String address;
 }
+
+

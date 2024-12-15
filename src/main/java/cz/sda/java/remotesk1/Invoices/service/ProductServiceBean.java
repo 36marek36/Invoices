@@ -3,7 +3,10 @@ package cz.sda.java.remotesk1.Invoices.service;
 import cz.sda.java.remotesk1.Invoices.controller.rest.request.UpdateProduct;
 import cz.sda.java.remotesk1.Invoices.exception.NotFoundException;
 import cz.sda.java.remotesk1.Invoices.model.Product;
+import cz.sda.java.remotesk1.Invoices.repository.ClientRepository;
+import cz.sda.java.remotesk1.Invoices.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -11,12 +14,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @Service
 public class ProductServiceBean implements ProductService {
 
-    private final Map<String, Product> products = new HashMap<>();
+    private final ProductRepository productRepository;
+
+    @Autowired
+    public ProductServiceBean(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
 
     @Override
     public Product addProduct(String name, String price) {
@@ -28,57 +38,59 @@ public class ProductServiceBean implements ProductService {
         }
 
         var product = new Product(UUID.randomUUID().toString(), name, price);
-        if (products.containsKey(product.id())) {
-            throw new IllegalArgumentException("Product with id " + product.id() + "already exists");
+        if (productRepository.existsById(product.getId())) {
+            throw new IllegalArgumentException("Product with id " + product.getId() + "already exists");
         }
-        products.put(product.id(), product);
+        productRepository.save(product);
         log.info("Product added: {}", product);
         return product;
     }
 
     @Override
     public void removeProduct(String id) {
-        if (!products.containsKey(id)) {
+        if (!productRepository.existsById(id)) {
             throw new NotFoundException("Product with id " + id + " does not exists");
         }
-        products.remove(id);
+        productRepository.deleteById(id);
         log.info("Product removed: {}", id);
 
     }
 
     @Override
     public Product getProduct(String id) {
-        if (!products.containsKey(id)) {
-            throw new NotFoundException("Product with id " + id + "does not exists");
-        }
-        return products.get(id);
+
+        return productRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Product with id " + id + " does not exists"));
     }
 
     @Override
-    public Product updateProduct(String id, UpdateProduct updateProduct) {
-        if (!products.containsKey(id)) {
-            throw new NotFoundException("Client with id " + id + " does not exist");
-        }
-        var product = products.get(id);
-        var builder = Product.builder().id(id);
-        if (StringUtils.hasText(updateProduct.name())) {
-            builder.name(updateProduct.name());
+    public Product updateProduct(String id, Product updateProduct) {
+
+        var product = productRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Product with id " + id + " does not exists"));
+
+        var updated = new Product();
+        updated.setId(id);
+        if (StringUtils.hasText(updateProduct.getName())) {
+            updated.setName(updateProduct.getName());
         } else {
-            builder.name(product.name());
+            updated.setName(product.getName());
         }
-        if (StringUtils.hasText(updateProduct.price())) {
-            builder.price(updateProduct.price());
+        if (StringUtils.hasText(updateProduct.getPrice())) {
+            updated.setPrice(updateProduct.getPrice());
         } else {
-            builder.price(product.price());
+            updated.setPrice(product.getPrice());
         }
-        var updated = builder.build();
-        products.put(id, updated);
+
+        productRepository.save(updated);
         log.info("Product updated: {}", updated);
         return updated;
     }
 
     @Override
     public List<Product> getAllProducts() {
-        return List.of(products.values().toArray(new Product[0]));
+        return StreamSupport.stream(productRepository.findAll().spliterator(),false).toList();
     }
 }
