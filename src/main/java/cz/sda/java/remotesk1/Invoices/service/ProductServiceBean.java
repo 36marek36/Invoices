@@ -79,12 +79,6 @@ public class ProductServiceBean implements ProductService {
             updated.setName(product.getName());
         }
 
-//        if (StringUtils.hasText(updateProduct.getPrice())) {
-//            updated.setPrice(updateProduct.getPrice());
-//        } else {
-//            updated.setPrice(product.getPrice());
-//        }
-
         if (updateProduct.getPrice() != product.getPrice()) {
             updated.setPrice(updateProduct.getPrice());
         }else {

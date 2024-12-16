@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Invoices</h2>
+<div th:switch="${#lists.size(invoices)}">
+    <p th:case="0">No invoices</p>
+    <div th:case="*">
+        <table>
+            <thead>
+            <tr>
+                <th>Client</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="invoice : ${invoices}">
+                <td th:text="${invoice.client != null} ? ${invoice.client.name} :''"></td>
+                <td th:text="${invoice.date}"></td>
+<!--                        <td><a th:href="@{/invoices/edit/{id}(id=${invoice.id})}">Edit</a></td>-->
+                        <td><a th:href="@{/invoices/delete/{id}(id=${invoice.id})}">Delete</a></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+<h3>Add new invoice</h3>
+
+<form action="#" th:action="@{/invoices/add}" th:object="${invoice}" method="post">
+
+  <p><label>Client:</label>
+  <select th:field="*{client}">
+    <option
+            th:each="client : ${clientList}"
+            th:value="${client.id}"
+            th:text="${client.name}">
+    </option>
+  </select>
+
+      <p><label>Date:</label> <input type="date" th:field="*{date}" th:errorclass="error"/>
+        <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}" th:errorclass="error"></span>
+      </p>
+
+    <p>
+        <button type="submit">Add</button>
+    </p>
+</form>
+</body>
+</html>
