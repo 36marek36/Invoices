@@ -23,8 +23,4 @@ public class UpdateClient {
     @NotBlank(message = "Address is required")
     private String address;
 
-//    @Min(8)
-//    @Max(999999)
-//    private int price;
-
 }

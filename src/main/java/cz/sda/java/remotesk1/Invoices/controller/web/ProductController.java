@@ -36,6 +36,7 @@ public class ProductController {
             model.addAttribute("products",productService.getAllProducts());
             return "products";
         }
+
         productService.addProduct(product.getName(),product.getPrice());
         return "redirect:/products/";
     }

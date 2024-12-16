@@ -29,13 +29,13 @@ public class ProductServiceBean implements ProductService {
 
 
     @Override
-    public Product addProduct(String name, String price) {
+    public Product addProduct(String name, int price) {
         if (!StringUtils.hasText(name)){
             throw new IllegalArgumentException("Name must not be empty");
         }
-        if (!StringUtils.hasText(price)){
-            throw new IllegalArgumentException("Price must not be empty");
-        }
+//        if (!StringUtils.hasText(price)){
+//            throw new IllegalArgumentException("Price must not be empty");
+//        }
 
         var product = new Product(UUID.randomUUID().toString(), name, price);
         if (productRepository.existsById(product.getId())) {
@@ -78,9 +78,16 @@ public class ProductServiceBean implements ProductService {
         } else {
             updated.setName(product.getName());
         }
-        if (StringUtils.hasText(updateProduct.getPrice())) {
+
+//        if (StringUtils.hasText(updateProduct.getPrice())) {
+//            updated.setPrice(updateProduct.getPrice());
+//        } else {
+//            updated.setPrice(product.getPrice());
+//        }
+
+        if (updateProduct.getPrice() != product.getPrice()) {
             updated.setPrice(updateProduct.getPrice());
-        } else {
+        }else {
             updated.setPrice(product.getPrice());
         }
 
