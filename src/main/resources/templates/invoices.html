@@ -20,8 +20,8 @@
             <tr th:each="invoice : ${invoices}">
                 <td th:text="${invoice.client != null} ? ${invoice.client.name} :''"></td>
                 <td th:text="${invoice.date}"></td>
-<!--                        <td><a th:href="@{/invoices/edit/{id}(id=${invoice.id})}">Edit</a></td>-->
-                        <td><a th:href="@{/invoices/delete/{id}(id=${invoice.id})}">Delete</a></td>
+                <!--                        <td><a th:href="@{/invoices/edit/{id}(id=${invoice.id})}">Edit</a></td>-->
+                <td><a th:href="@{/invoices/delete/{id}(id=${invoice.id})}">Delete</a></td>
             </tr>
         </table>
     </div>
@@ -31,18 +31,32 @@
 
 <form action="#" th:action="@{/invoices/add}" th:object="${invoice}" method="post">
 
-  <p><label>Client:</label>
-  <select th:field="*{client}">
-    <option
-            th:each="client : ${clientList}"
-            th:value="${client.id}"
-            th:text="${client.name}">
-    </option>
-  </select>
+    <p><label>Client:
+        <select th:field="*{client}">
+            <option
+                    th:each="client : ${clientList}"
+                    th:value="${client.id}"
+                    th:text="${client.name}">
+            </option>
+        </select>
+    </label>
+    </p>
 
-      <p><label>Date:</label> <input type="date" th:field="*{date}" th:errorclass="error"/>
+    <!--    <p><label>Client:</label>-->
+    <!--        <select th:field="*{client}">-->
+    <!--            <option-->
+    <!--                    th:each="client : ${clientList}"-->
+    <!--                    th:value="${client.id}"-->
+    <!--                    th:text="${client.name}">-->
+    <!--            </option>-->
+    <!--        </select>-->
+    <!--    </p>-->
+
+    <p><label>Date:
+        <input type="date" th:field="*{date}" th:errorclass="error"/>
         <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}" th:errorclass="error"></span>
-      </p>
+    </label>
+    </p>
 
     <p>
         <button type="submit">Add</button>

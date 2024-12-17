@@ -10,7 +10,6 @@ public interface InvoiceService {
     Invoice createInvoice(Client client, LocalDate date);
     Invoice getInvoice(String id);
     List<Invoice> getAllInvoices();
-    Invoice updateInvoice(String id, Invoice invoice);
     void deleteInvoice(String id);
-
+    void updateInvoice(String id, Client clientId, LocalDate date);
 }

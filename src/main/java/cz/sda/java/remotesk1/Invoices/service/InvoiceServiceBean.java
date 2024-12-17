@@ -34,7 +34,9 @@ public class InvoiceServiceBean implements InvoiceService {
 
     @Override
     public Invoice getInvoice(String id) {
-        return null;
+        return invoiceRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Invoice not found"));
     }
 
     @Override
@@ -43,18 +45,30 @@ public class InvoiceServiceBean implements InvoiceService {
     }
 
     @Override
-    public Invoice updateInvoice(String id, Invoice invoice) {
-        return null;
-    }
-
-
-    @Override
     public void deleteInvoice(String id) {
         if (!invoiceRepository.existsById(id)) {
             throw new NotFoundException("Invoice with id " + id + " does not exists");
         }
         invoiceRepository.deleteById(id);
         log.info("Invoice removed: {}", id);
+    }
+
+    @Override
+    public void updateInvoice(String id, Client client, LocalDate date) {
+        if (!invoiceRepository.existsById(id)) {
+            throw new NotFoundException("Invoice with id " + id + " does not exists");
+        }
+        var invoice=invoiceRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Invoice with id " + id + " does not exists"));
+        if (client != null) {
+            invoice.setClient(client);
+        }
+        if (date != null) {
+            invoice.setDate(date);
+        }
+        invoiceRepository.save(invoice);
+        log.info("Invoice updated: " + invoice);
 
     }
 }
