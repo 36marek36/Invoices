@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 public class CreateInvoice {
+
     Client client;
     LocalDate date;
 }

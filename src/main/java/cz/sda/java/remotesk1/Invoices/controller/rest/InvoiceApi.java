@@ -5,14 +5,11 @@ import cz.sda.java.remotesk1.Invoices.controller.rest.request.UpdateInvoice;
 import cz.sda.java.remotesk1.Invoices.model.Invoice;
 import cz.sda.java.remotesk1.Invoices.service.ClientService;
 import cz.sda.java.remotesk1.Invoices.service.InvoiceService;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
