@@ -42,16 +42,6 @@
     </label>
     </p>
 
-    <!--    <p><label>Client:</label>-->
-    <!--        <select th:field="*{client}">-->
-    <!--            <option-->
-    <!--                    th:each="client : ${clientList}"-->
-    <!--                    th:value="${client.id}"-->
-    <!--                    th:text="${client.name}">-->
-    <!--            </option>-->
-    <!--        </select>-->
-    <!--    </p>-->
-
     <p><label>Date:
         <input type="date" th:field="*{date}" th:errorclass="error"/>
         <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}" th:errorclass="error"></span>
