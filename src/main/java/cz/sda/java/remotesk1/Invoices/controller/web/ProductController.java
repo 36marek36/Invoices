@@ -47,7 +47,7 @@ public class ProductController {
     }
 
     @GetMapping("/edit/{id}")
-    String updateProduct(@PathVariable String id, Model model) {
+    String getProductById(@PathVariable String id, Model model) {
         model.addAttribute("updateProduct", productService.getProduct(id));
         return "edit-product";
     }

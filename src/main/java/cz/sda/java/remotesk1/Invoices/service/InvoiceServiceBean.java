@@ -16,6 +16,7 @@ import java.util.stream.StreamSupport;
 @Slf4j
 @Service
 public class InvoiceServiceBean implements InvoiceService {
+
     private final InvoiceRepository invoiceRepository;
 
     @Autowired
