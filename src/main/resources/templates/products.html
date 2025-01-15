@@ -1,51 +1,93 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h2>Products</h2>-->
+<!--<div th:switch="${#lists.size(products)}">-->
+<!--    <p th:case="0">No products</p>-->
+<!--    <div th:case="*">-->
+<!--        <table>-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th>Name</th>-->
+<!--                <th>Price</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr th:each="product : ${products}">-->
+<!--                <td th:text="${product.name}"></td>-->
+<!--                <td th:text="${product.price}"></td>-->
+<!--                <td><a th:href="@{/products/edit/{id}(id=${product.id})}">Edit</a></td>-->
+<!--                <td><a th:href="@{/products/delete/{id}(id=${product.id})}">Delete</a></td>-->
+<!--            </tr>-->
+<!--        </table>-->
+<!--    </div>-->
+
+<!--</div>-->
+<!--<h3>Add new product</h3>-->
+
+<!--<form action="#" th:action="@{/products/add}" th:object="${createProduct}" method="post">-->
+<!--&lt;!&ndash;    <p>Name: <input type="text" th:field="*{name}"/></p>&ndash;&gt;-->
+
+<!--    <p><label>Name:</label> <input type="text" th:field="*{name}" th:errorclass="error"/>-->
+<!--        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="error"></span>-->
+<!--    </p>-->
+
+
+<!--&lt;!&ndash;    <p>Price: <input type="text" th:field="*{price}"/></p>&ndash;&gt;-->
+<!--    <p><label>Price:</label> <input type="text" th:field="*{price}" th:errorclass="error"/>-->
+<!--        <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" th:errorclass="error"></span>-->
+<!--    </p>-->
+
+
+<!--    <p><button type="submit">Add</button></p>-->
+<!--</form>-->
+
+
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:replace="fragments/header :: head"></head>
 <body>
-<h2>Products</h2>
-<div th:switch="${#lists.size(products)}">
-    <p th:case="0">No products</p>
-    <div th:case="*">
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Price</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="product : ${products}">
-                <td th:text="${product.name}"></td>
-                <td th:text="${product.price}"></td>
-                <td><a th:href="@{/products/edit/{id}(id=${product.id})}">Edit</a></td>
-                <td><a th:href="@{/products/delete/{id}(id=${product.id})}">Delete</a></td>
-            </tr>
-        </table>
+<div id="menu" th:insert="fragments/menu :: menu"></div>
+<div id="page">
+    <h2 th:text="${pageTitle}"></h2>
+    <h3>Add new product</h3>
+    <form action="#" th:action="@{/products/add}" th:object="${createProduct}" method="post">
+        <p>Name: <input type="text" th:field="*{name}"/></p>
+        <p>Price: <input type="text" th:field="*{price}"/></p>
+        <p>
+            <button type="submit">Add</button>
+        </p>
+    </form>
+
+    <div th:switch="${#lists.size(products)}">
+        <p th:case="0">No products</p>
+        <div th:case="*">
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${products}">
+                    <td th:text="${product.name}">Name</td>
+                    <td th:text="${product.price}+eur">Price</td>
+                    <td><a th:href="@{/products/edit/{id}(id=${product.id})}">Edit</a></td>
+                    <td><a th:href="@{/products/delete/{id}(id=${product.id})}">Delete</a></td>
+                </tr>
+            </table>
+
+        </div>
+
     </div>
-
 </div>
-<h3>Add new product</h3>
-
-<form action="#" th:action="@{/products/add}" th:object="${createProduct}" method="post">
-<!--    <p>Name: <input type="text" th:field="*{name}"/></p>-->
-
-    <p><label>Name:</label> <input type="text" th:field="*{name}" th:errorclass="error"/>
-        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="error"></span>
-    </p>
-
-
-<!--    <p>Price: <input type="text" th:field="*{price}"/></p>-->
-    <p><label>Price:</label> <input type="text" th:field="*{price}" th:errorclass="error"/>
-        <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" th:errorclass="error"></span>
-    </p>
-
-
-    <p><button type="submit">Add</button></p>
-</form>
-
-
 </body>
 </html>

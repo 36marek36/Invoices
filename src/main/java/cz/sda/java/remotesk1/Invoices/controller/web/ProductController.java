@@ -24,22 +24,24 @@ public class ProductController {
 
     @GetMapping("/")
     String getAllProducts(Model model) {
-        model.addAttribute("products",productService.getAllProducts());
-        model.addAttribute("createProduct",new Product());
+        setDefaultValues(model);
+        model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("createProduct", new Product());
         return "products";
     }
 
     @PostMapping("/add")
     String addProduct(@Valid CreateProduct product, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("createProduct",product);
-            model.addAttribute("products",productService.getAllProducts());
+            model.addAttribute("createProduct", product);
+            model.addAttribute("products", productService.getAllProducts());
             return "products";
         }
 
-        productService.addProduct(product.getName(),product.getPrice());
+        productService.addProduct(product.getName(), product.getPrice());
         return "redirect:/products/";
     }
+
     @GetMapping("/delete/{id}")
     String deleteProduct(@PathVariable String id, Model model) {
         productService.removeProduct(id);
@@ -48,6 +50,7 @@ public class ProductController {
 
     @GetMapping("/edit/{id}")
     String getProductById(@PathVariable String id, Model model) {
+        setDefaultValues(model);
         model.addAttribute("updateProduct", productService.getProduct(id));
         return "edit-product";
     }
@@ -59,15 +62,18 @@ public class ProductController {
 //    }
 
     @PostMapping("/update/{id}")
-    String updateProduct(@PathVariable String id, @Valid UpdateProduct product,BindingResult result, Model model) {
+    String updateProduct(@PathVariable String id, @Valid UpdateProduct product, BindingResult result, Model model) {
+        setDefaultValues(model);
         if (result.hasErrors()) {
-            product.setId(id);
-            model.addAttribute("updateProduct",product);
+            model.addAttribute("updateProduct", product);
             return "edit-product";
         }
-        
-        productService.updateProduct(product.getId(),new Product(product.getId(),product.getName(),product.getPrice()));
+        productService.updateProduct(product.getId(), new Product(product.getId(), product.getName(), product.getPrice()));
         return "redirect:/products/";
+    }
+
+    private void setDefaultValues(Model model) {
+        model.addAttribute("pageTitle", "Producteria");
     }
 
 }

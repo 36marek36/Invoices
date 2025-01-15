@@ -1,0 +1,75 @@
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle} ? ${pageTitle} : 'default title'"></title>
+    <style>
+        .error {
+            color: whitesmoke;
+        }
+
+        input.error {
+            color: whitesmoke;
+            border: 1px solid whitesmoke;
+        }
+
+        button {
+            background: white;
+            font-size: 1.3rem;
+            padding: .3em .6em;
+            cursor: pointer;
+            border: 2px solid black;
+        }
+
+        body {
+            display: flex;
+            background: #710000;
+            flex-direction: column;
+            color: whitesmoke;
+        }
+
+        a {
+            color: whitesmoke;
+        }
+
+        p, tr {
+            font-size: 20px;
+        }
+
+        button:hover {
+            background-color: lightblue;
+        }
+
+        input:focus {
+            background: lightblue;
+            color: black;
+        }
+
+
+        h2 {
+            display: flex;
+            background: #710000;
+            font: 40px bold;
+            color: #F4C015;
+            height: 50px;
+            width: 100vw;
+            justify-content: left;
+            align-items: center;
+        }
+
+        h3 {
+            font-size: 30px;
+        }
+
+        td {
+            color: #F4C015;
+            font-size: 20px;
+        }
+
+
+    </style>
+
+
+    <!--        <link th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}" rel="stylesheet"/>-->
+    <!--        <link th:href="@{/css/app.css}" rel="stylesheet"/>-->
+    <!--        <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js}" defer></script>-->
+    <!--        <script th:src="@{/js/app.js}" defer></script>-->
+</head>

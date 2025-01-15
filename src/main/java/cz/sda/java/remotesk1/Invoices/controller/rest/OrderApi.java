@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -31,7 +33,7 @@ class OrderApi {
         Order created = orderService.addOrder(order.clientId(), order.date());
         return ResponseEntity.created(URI.create("/orders/" + created.getId())).body(created);
     }
-
+    @Secured("ADMIN")
     @GetMapping("/")
     List<Order> getAllOrders() {
         return orderService.getAllOrders();

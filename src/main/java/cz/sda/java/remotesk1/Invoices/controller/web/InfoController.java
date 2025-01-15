@@ -6,20 +6,27 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/info")
 public class InfoController {
 
     private final InfoService infoService;
 
     @Autowired
-    public InfoController(@Qualifier("infoService") InfoService infoService) {
+    public InfoController(InfoService infoService) {
         this.infoService = infoService;
     }
 
-    @GetMapping("/info")
+    @GetMapping("/")
     String info(Model model){
-        model.addAttribute("info",infoService.getInfo());
+        setDefaultValues(model);
+        model.addAttribute("info", infoService.getInfo());
         return "info";
+    }
+
+    private void setDefaultValues(Model model){
+        model.addAttribute("pageTitle", "Infoteria");
     }
 }

@@ -26,6 +26,7 @@ public class ClientController {
 
     @GetMapping("/")
     String getAllClients(Model model) {
+        setDefaultValues(model);
         model.addAttribute("clients", clientService.getAllClients());
         model.addAttribute("createClient",new Client());
         return "clients";
@@ -44,25 +45,28 @@ public class ClientController {
             model.addAttribute("clients", clientService.getAllClients());
             return "clients";
         }
-
+        setDefaultValues(model);
         clientService.addClient(client.getName(),client.getAddress());
         return "redirect:/clients/";
     }
 
     @GetMapping("/delete/{id}")
     String deleteUser(@PathVariable String id, Model model) {
+        setDefaultValues(model);
         clientService.removeClient(id);
         return "redirect:/clients/";
     }
 
     @GetMapping("/edit/{id}")
     String updateUser(@PathVariable String id, Model model) {
+        setDefaultValues(model);
         model.addAttribute("updateClient", clientService.getClient(id));
         return "edit-client";
     }
 
     @PostMapping("/update/{id}")
     String updateUser(@PathVariable String id, @Valid UpdateClient client, BindingResult result, Model model) {
+        setDefaultValues(model);
         if (result.hasErrors()) {
             client.setId(id);
             model.addAttribute("updateClient", client);
@@ -70,6 +74,10 @@ public class ClientController {
         }
         clientService.updateClient(client.getId(),new Client(client.getId(),client.getName(),client.getAddress()));
         return "redirect:/clients/";
+    }
+
+    private void setDefaultValues (Model model) {
+        model.addAttribute("pageTitle", "Clienteria");
     }
 
 }
